@@ -24,3 +24,30 @@ button.addEventListener("mouseover", () => {
 button.addEventListener("mouseout", () => {
   button.style.backgroundColor = "#007BFF";
 });
+
+//Add tooltip to username on mouseover
+usernameBox.addEventListener("mouseover", () => {
+  usernameBox.setAttribute("title", "Please enter your name");
+});
+
+usernameBox.addEventListener("mouseout", () => {
+  usernameBox.removeAttribute("title");
+});
+
+//Add tooltip to email on mouseover
+emailBox.addEventListener("mouseover", () => {
+  emailBox.setAttribute("title", "Please enter your email");
+});
+
+emailBox.addEventListener("mouseout", () => {
+  emailBox.removeAttribute("title");
+});
+
+//Add tooltip to comments on mouseover
+commentsBox.addEventListener("mouseover", () => {
+  commentsBox.setAttribute("title", "Please enter any comments or feedback");
+});
+
+commentsBox.addEventListener("mouseout", () => {
+  commentsBox.removeAttribute("title");
+});
