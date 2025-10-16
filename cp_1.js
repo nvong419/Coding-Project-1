@@ -6,7 +6,6 @@ const emailBox = document.querySelector("#email");
 const commentsBox = document.querySelector("#comments");
 
 button.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent form from clearing values
     event.stopPropagation();
 
     const username = document.getElementById("name").value;
@@ -47,12 +46,20 @@ button.addEventListener("click", (event) => {
 //Change color of button on mouseover
 button.addEventListener("mouseover", () => {
     button.style.backgroundColor = "#0056b3";
-    stopPropagation();
 });
 
 button.addEventListener("mouseout", () => {
     button.style.backgroundColor = "#007BFF";
 });
+
+
+//Add keydown listener to update char-count
+document.getElementById("comments").addEventListener("input", (event) => {
+    event.stopPropagation();
+
+    const charCount = document.getElementById("comments-count");
+    charCount.textContent = `${event.target.value.length}`;
+})
 
 //Add tooltip to username on mouseover
 usernameBox.addEventListener("mouseover", () => {
@@ -63,6 +70,7 @@ usernameBox.addEventListener("mouseout", () => {
     usernameBox.removeAttribute("title");
 });
 
+
 //Add tooltip to email on mouseover
 emailBox.addEventListener("mouseover", () => {
     emailBox.setAttribute("title", "Please enter your email");
@@ -71,6 +79,7 @@ emailBox.addEventListener("mouseover", () => {
 emailBox.addEventListener("mouseout", () => {
     emailBox.removeAttribute("title");
 });
+
 
 //Add tooltip to comments on mouseover
 commentsBox.addEventListener("mouseover", () => {
