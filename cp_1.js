@@ -7,11 +7,13 @@ const commentsBox = document.querySelector("#comments");
 
 button.addEventListener("click", (event) => {
     event.stopPropagation();
+    event.preventDefault();
 
     const username = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const comments = document.getElementById("comments").value;
-    
+    const charCount = document.getElementById("comments-count");
+
     //Check if required fields are filled
     if (!username || !email || !comments) {
         alert("Please fill in all required fields.");
@@ -19,7 +21,15 @@ button.addEventListener("click", (event) => {
     }
     //Test if values are collected correctly
     //alert(`Form Submitted!\nName: ${username}\nEmail: ${email}\nComments: ${comments}`);
-    
+
+    //Check if comments are too long
+    const currentLength = charCount.textContent;
+    charCount.textContent = currentLength;
+    if (currentLength > 200) {
+        alert("Comments are too long! Please keep it under 200 characters.");
+        return;
+    }
+
     //Add a new section to feedback container
     const newSection = document.createElement("section");
 
@@ -39,8 +49,9 @@ button.addEventListener("click", (event) => {
     newSection.append(nameP, emailP, commentsP);
     feedback.appendChild(newSection);
     
-    //Clear form
+    //Clear form and reset char count
     form.reset();
+    charCount.textContent = "0";
 });
 
 //Change color of button on mouseover
@@ -59,33 +70,54 @@ document.getElementById("comments").addEventListener("input", (event) => {
 
     const charCount = document.getElementById("comments-count");
     charCount.textContent = `${event.target.value.length}`;
-})
+
+    //Highlight character counter red if comment exceeds limit
+    if (event.target.value.length > 200) {
+        charCount.style.color = "red";
+    } else {
+        charCount.style.color = "black";
+    }
+    
+});
+
+//Event Bubbling for tooltips
+form.addEventListener("mouseover", (event) => {
+    if (event.target.matches("#name")) {
+        event.target.setAttribute("title", "Please enter your name");
+    } else if (event.target.matches("#email")) {
+        event.target.setAttribute("title", "Please enter your email");
+    } else if (event.target.matches("#comments")) {
+        event.target.setAttribute("title", "Please enter any comments or feedback");
+    }
+});
+
+// *** Deprecated Code ***
 
 //Add tooltip to username on mouseover
-usernameBox.addEventListener("mouseover", () => {
-    usernameBox.setAttribute("title", "Please enter your name");
-});
+// usernameBox.addEventListener("mouseover", () => {
+//     usernameBox.setAttribute("title", "Please enter your name");
+// });
 
-usernameBox.addEventListener("mouseout", () => {
-    usernameBox.removeAttribute("title");
-});
-
-
-//Add tooltip to email on mouseover
-emailBox.addEventListener("mouseover", () => {
-    emailBox.setAttribute("title", "Please enter your email");
-});
-
-emailBox.addEventListener("mouseout", () => {
-    emailBox.removeAttribute("title");
-});
+// usernameBox.addEventListener("mouseout", () => {
+//     usernameBox.removeAttribute("title");
+// });
 
 
-//Add tooltip to comments on mouseover
-commentsBox.addEventListener("mouseover", () => {
-    commentsBox.setAttribute("title", "Please enter any comments or feedback");
-});
+// //Add tooltip to email on mouseover
+// emailBox.addEventListener("mouseover", () => {
+//     emailBox.setAttribute("title", "Please enter your email");
+// });
 
-commentsBox.addEventListener("mouseout", () => {
-    commentsBox.removeAttribute("title");
-});
+// emailBox.addEventListener("mouseout", () => {
+//     emailBox.removeAttribute("title");
+// });
+
+
+// //Add tooltip to comments on mouseover
+// commentsBox.addEventListener("mouseover", () => {
+//     commentsBox.setAttribute("title", "Please enter any comments or feedback");
+// });
+
+// commentsBox.addEventListener("mouseout", () => {
+//     commentsBox.removeAttribute("title");
+// });
